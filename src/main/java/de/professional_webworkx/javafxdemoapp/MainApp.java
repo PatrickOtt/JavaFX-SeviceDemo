@@ -6,11 +6,9 @@ import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -53,39 +51,7 @@ public class MainApp extends Application {
                 });
                 service.start();
         
-        Button getNewList = new Button("Add new TilePane");
-        getNewList.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent t) {
-                
-                // If you want to clear the Content of the current TilePane - uncomment the
-                // following two lines..
-                // ObservableList<Node> children = tilePane.getChildren();
-                // children.clear();
-
-                if (service == null) {
-                    service = new JVMDataService();
-                }
-                // delay before running the first time
-                service.setDelay(Duration.seconds(3));
-                // time between every Period / Run
-                service.setPeriod(Duration.seconds(3));
-                service.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-                    @Override
-                    public void handle(WorkerStateEvent t) {
-                        List<Person> persons = (List<Person>) t.getSource().getValue();
-                        for (Person person : persons) {
-                            tilePane.getChildren().add(new Text(person.getFirstName() + " " + person.getLastNameProperty().get() + ", " + person.geteMailProperty().get()));
-                        }
-                    }
-                });
-                service.start();
-            }
-        });
-
-        //hBox.getChildren().add(getNewList);
         hBox.getChildren().add(vBox);
 
         root.getChildren().add(hBox);
